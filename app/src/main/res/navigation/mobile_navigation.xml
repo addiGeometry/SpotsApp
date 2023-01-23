@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_map">
+
+    <fragment
+        android:id="@+id/navigation_spots"
+        android:name="com.geometry.spotsapp.ui.spots.SpotsFragment"
+        android:label="@string/title_spots"
+        tools:layout="@layout/fragment_spots" />
+
+    <fragment
+        android:id="@+id/navigation_map"
+        android:name="com.geometry.spotsapp.ui.map.MapFragment"
+        android:label="@string/title_map"
+        tools:layout="@layout/fragment_map" />
+
+    <fragment
+        android:id="@+id/navigation_share"
+        android:name="com.geometry.spotsapp.ui.share.ShareFragment"
+        android:label="@string/title_share"
+        tools:layout="@layout/fragment_share" />
+
+
+</navigation>

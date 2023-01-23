@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/bonuspack_bubble"
+    android:id="@+id/spot_bubble">
+    <ImageView android:id="@+id/bubble_image"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:visibility="gone" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+        android:orientation="vertical" >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+            <TextView android:id="@+id/bubble_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:maxEms="17"
+                android:layout_gravity="left"
+                android:layout_weight="1"
+                android:text="Title" />
+            <com.google.android.material.floatingactionbutton.FloatingActionButton android:id="@+id/map_delete_spot"
+                android:src="@drawable/ic_baseline_delete_24"
+                android:maxHeight="1dp"
+                android:maxWidth="1dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="170dp"
+                android:layout_gravity="right"
+                android:clickable="true"
+                />
+        </LinearLayout>
+        <TextView android:id="@+id/bubble_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:textSize="12dp"
+            android:maxEms="17"
+            android:text="Description" />
+        <TextView android:id="@+id/bubble_subdescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:textSize="10dp"
+            android:maxEms="17"
+            android:text="Address"
+            android:visibility="gone" />
+    </LinearLayout>
+</LinearLayout>

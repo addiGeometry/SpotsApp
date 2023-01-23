@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">SpotsApp</string>
+    <string name="title_spots">Spots</string>
+    <string name="title_map">Map</string>
+    <string name="title_share">Share</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

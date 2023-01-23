@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_spots"
+        android:icon="@drawable/ic_baseline_push_pin_24"
+        android:title="@string/title_spots" />
+
+    <item
+        android:id="@+id/navigation_map"
+        android:icon="@drawable/ic_baseline_map_24"
+        android:title="@string/title_map" />
+
+    <item
+        android:id="@+id/navigation_share"
+        android:icon="@drawable/ic_baseline_share_location_24"
+        android:title="@string/title_share" />
+
+</menu>
