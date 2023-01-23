@@ -11,9 +11,11 @@ import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
 
+/**
+ * Implementierung des MapManipulators, der die Persistierung
+ */
 public class MapManipulatorImp implements MapManipulator{
 
     private final MapView map;
@@ -21,20 +23,30 @@ public class MapManipulatorImp implements MapManipulator{
     private final DatastorageMapAccess datastorage;
     private final SpotIconManager spotIconManager;
     private HashMap<String, Spot> refSet = new HashMap<>();
+    private SpotInfoWindowFactory factory;
 
 
-    protected MapManipulatorImp(MapView map, DatastorageMapAccess datastorage){
+    protected MapManipulatorImp(MapView map, DatastorageMapAccess datastorage, SpotInfoWindowFactory factory){
+
         this.map = map;
         this.datastorage = datastorage;
         this.spotIconManager = SpotIconManager.getInstance(map.getContext());
+        this.factory = factory;
+    }
+
+    protected MapManipulatorImp(MapView map, DatastorageMapAccess datastorage, SpotInfoWindowFactory factory, SpotIconManager spotIconManager){
+        this.map = map;
+        this.datastorage = datastorage;
+        this.spotIconManager = spotIconManager;
+        this.factory = factory;
     }
 
 
     @Override
     public void addANewMarker(String title, String category, double lat, double lon, String description) throws IllegalArgumentException, IllegalAccessError{
         if(title.length() > 16 || title.length() == 0) throw new IllegalArgumentException();
-        if(category == null) throw new IllegalThreadStateException();
-        List<String> catNames = datastorage.getAllCategoryNames();
+        if(category == null) throw new IllegalAccessError();
+        //List<String> catNames = datastorage.getAllCategoryNames();
         Marker marker = new Marker(map);
         String id = UUID.randomUUID().toString();
         marker.setId(id);
@@ -45,8 +57,7 @@ public class MapManipulatorImp implements MapManipulator{
         int color = datastorage.getCatColor(category);
         marker.setIcon(spotIconManager.getSpotIcon(color, category));
 
-        marker.setInfoWindow(new SpotInfoWindow(R.layout.spot_bubble, map, color, this, marker));
-
+        marker.setInfoWindow(factory.newSpotInfoWindow(R.layout.spot_bubble, map, color, this, marker));
         //Speichern auf Model
         datastorage.addSpot(marker, category);
 

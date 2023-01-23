@@ -1,18 +1,13 @@
 package com.geometry.spotsapp.ui.spots;
 
-import static com.geometry.spotsapp.ui.map.MapFragment.TAG;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,11 +26,9 @@ import com.geometry.spotsapp.control.CategoriesManipulatorImpl;
 import com.geometry.spotsapp.control.CategoryExiststAlreadyExcpetion;
 import com.geometry.spotsapp.model.MapInstance;
 import com.geometry.spotsapp.R;
-import com.geometry.spotsapp.control.CatManipulator;
 import com.geometry.spotsapp.databinding.FragmentSpotsBinding;
 import com.geometry.spotsapp.model.DatastorageAccessFactory;
 import com.geometry.spotsapp.model.DatastorageListAccess;
-import com.geometry.spotsapp.ui.MainActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -51,9 +44,9 @@ public class SpotsFragment extends Fragment {
     //Model
     private DatastorageListAccess datastorage;
     private CategoriesManipulator categoriesManipulatorImpl;
+    private DatastorageAccessFactory dsfactory;
 
-    //Control
-    private CatManipulator catManipulator;
+
     //view
     private ExpandableListView expandableListView;
     private ExpandableListAdapter expandableListAdapter;
@@ -65,12 +58,13 @@ public class SpotsFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         defaultColor = ContextCompat.getColor(getContext(), R.color.catStandardColor);
         expandableListDetail = new HashMap<>();
+        dsfactory = new DatastorageAccessFactory();
         categoriesManipulatorImpl = CategoriesManipulatorImpl.getInstance();
 
         binding = FragmentSpotsBinding.inflate(inflater, container, false);
         view = binding.getRoot();
 
-        datastorage = DatastorageAccessFactory.newDatastorageListAcces(MapInstance.getInstance());
+        datastorage = dsfactory.newDatastorageListAcces(MapInstance.getInstance());
 
         //ListView
         expandableListView = view.findViewById(R.id.categoryTree);

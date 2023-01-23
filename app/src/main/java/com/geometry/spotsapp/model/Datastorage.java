@@ -27,6 +27,9 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
+/**
+ * Abstraktionsebene über der SQLite Datenbank. Bietet Dienste für das Control an
+ */
 public class Datastorage implements DatastorageMapAccess {
 
     private boolean exportStatus = true;
@@ -41,7 +44,11 @@ public class Datastorage implements DatastorageMapAccess {
 
     private Datastore datastore = null;
 
-
+    /**
+     * Wird durch ein Factory-Pattern implementiert
+     * @param map
+     * @param spotIcon
+     */
     protected Datastorage(MapView map, SpotIconManager spotIcon){
         this.map = map;
         this.spotIconManager = spotIcon;
@@ -149,6 +156,9 @@ public class Datastorage implements DatastorageMapAccess {
         }
     }
 
+    /**
+     * Wird beim ende der App aufgerufen
+     */
     public void destroyDatastore(){
         if (sqLiteDatabase != null)
             this.close();
@@ -156,6 +166,9 @@ public class Datastorage implements DatastorageMapAccess {
         datastore = null;
     }
 
+    /**
+     * Erzeugt die Datastore-Klasse, die die SQL-Lite Datenbank verwaltet
+     */
     private void createDatastore(){
         if (datastore == null) datastore = new DatastoreImpl(spotIconManager);
     }
@@ -167,25 +180,26 @@ public class Datastorage implements DatastorageMapAccess {
             datastore = null;
     }
 
-    @Nullable
-    public Datastore getSpotDatastore(){
-        return datastore;
-    }
-
+    /**
+     * @return Gebe die Namen aller Kategorien als eine Liste von Strings zurück
+     */
     public List<String> getAllCategoryNames(){
         return datastore.getAllCategoryNames();
     }
 
+    /**
+     * @param category
+     * @return Gebe die entsprechende Farbe zu einer Kategorie zurück
+     */
     @Override
     public int getCatColor(String category) {
         return datastore.getCatColor(category);
     }
 
-    public List<SpotCategory> getAllCategories() {
-        return datastore.getAllCategories();
-    }
-
-
+    /**
+     * @param category
+     * @return Erzeuge ein Icon, mit dem das Control zeichnet
+     */
     public Drawable getSpotIcon(String category) {
         int color = datastore.getCatColor(category);
         Log.d(TAG, "MAYDAY " + color);
@@ -197,18 +211,31 @@ public class Datastorage implements DatastorageMapAccess {
         return spotIconManager.getSpotImage();
     }
 
-
+    /**
+     * Gebe den Auftrag einen Spot auf der Datenbank zu persistieren
+     * @param bookmark Zu speichernder Marker
+     * @param category Kategorie
+     */
     @Override
     public void addSpot(Marker bookmark, String category) {
         datastore.addSpot(bookmark, category);
     }
 
+    /**
+     * Gebe den Auftrag einen Spot von der Datenbank zu löschen
+     * @param spotId
+     */
     @Override
     public void removeSpot(String spotId) {
         datastore.removeSpot(spotId);
     }
 
-
+    /**
+     * Gebe eine Liste aller Spots als Markerliste zurück. (Wird beim zeichnen gebraucht)
+     * @param view
+     * @param mapManipulator
+     * @return
+     */
     @Override
     public List<Marker> getBookmarksAsMarkers(MapView view, MapManipulator mapManipulator) {
         List<Spot> spots = datastore.getSpots(view, mapManipulator);

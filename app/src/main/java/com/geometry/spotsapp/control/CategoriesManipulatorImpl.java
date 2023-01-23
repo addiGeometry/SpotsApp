@@ -9,13 +9,36 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Control-Klasse für die Manipulation der perrsistenten Daten von Kategorien
+ */
 public class CategoriesManipulatorImpl implements CategoriesManipulator{
     private DatastorageListAccess datastorage;
+    private DatastorageAccessFactory dsfactory;
 
+
+    /*
+    Mit Singleton implementiert
+     */
     private CategoriesManipulatorImpl() {
-        datastorage = DatastorageAccessFactory.newDatastorageListAcces(MapInstance.getInstance());
+        dsfactory = new DatastorageAccessFactory();
+        datastorage = initDatastorage();
     }
 
+    /**
+     * Erzeuge eine neue Instance mit der Factory. Es gibt nur einen Globalen Controller.
+     * @return
+     */
+    public DatastorageListAccess initDatastorage(){
+        return dsfactory.newDatastorageListAcces(MapInstance.getInstance());
+    }
+
+    /**
+     * @param name der neuen Kategorie
+     * @param color
+     * @throws CategoryExiststAlreadyExcpetion
+     * @throws IllegalArgumentException
+     */
     @Override
     public void addCategory(String name, int color) throws CategoryExiststAlreadyExcpetion, IllegalArgumentException{
         if(name.length() > 16 || name.length() == 0) throw new IllegalArgumentException();
@@ -28,6 +51,10 @@ public class CategoriesManipulatorImpl implements CategoriesManipulator{
 
     private static CategoriesManipulator categoriesManipulator;
 
+    /**
+     * Singleton-Pattern Methode zur Erzeugung neuer MapManipulator
+     * @return
+     */
     public static CategoriesManipulator getInstance(){
         if(CategoriesManipulatorImpl.categoriesManipulator == null) CategoriesManipulatorImpl.categoriesManipulator = new CategoriesManipulatorImpl();
         return CategoriesManipulatorImpl.categoriesManipulator;

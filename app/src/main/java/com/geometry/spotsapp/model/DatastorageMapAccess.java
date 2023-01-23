@@ -10,10 +10,23 @@ import org.osmdroid.views.overlay.Marker;
 
 import java.util.List;
 
+/**
+ * Sicht für das MapFragment, um auf den Controller zu zu greifen.
+ */
 public interface DatastorageMapAccess{
-
+    /**
+     * Noch nicht implementiert
+     * @param fileList
+     * @param file
+     * @param activity
+     */
     void exportToCsv(String[] fileList, String file, Activity activity);
 
+    /**
+     * Noch nicht implementiert
+     * @param files
+     * @param activity
+     */
     void importFromCsv(String[] files, Activity activity);
 
     void destroyDatastore();

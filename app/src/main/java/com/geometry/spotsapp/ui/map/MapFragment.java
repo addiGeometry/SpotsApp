@@ -32,6 +32,7 @@ import androidx.fragment.app.Fragment;
 
 import com.geometry.spotsapp.BuildConfig;
 import com.geometry.spotsapp.R;
+import com.geometry.spotsapp.control.SpotInfoWindowFactory;
 import com.geometry.spotsapp.model.SpotIconManager;
 import com.geometry.spotsapp.control.MapManipulator;
 import com.geometry.spotsapp.control.MapManipulatorFactory;
@@ -76,7 +77,7 @@ public class MapFragment extends Fragment implements LocationListener {
 
     //Model
     private DatastorageMapAccess datastorage;
-
+    private DatastorageAccessFactory dsfactory;
 
 
     /**
@@ -91,6 +92,7 @@ public class MapFragment extends Fragment implements LocationListener {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dsfactory = new DatastorageAccessFactory();
     }
 
 
@@ -237,11 +239,11 @@ public class MapFragment extends Fragment implements LocationListener {
         Log.d(TAG, "onMFragModelInitialised");
         //init Model
         if (datastorage == null) {
-            datastorage = DatastorageAccessFactory.newDatastorageMapAccess(map, spotIconManager);
+            datastorage = dsfactory.newDatastorageMapAccess(map, spotIconManager);
         }
 
         //init Control
-        mapManipulator = MapManipulatorFactory.newMapManipulator(map, datastorage);
+        mapManipulator = MapManipulatorFactory.newMapManipulator(map, datastorage, new SpotInfoWindowFactory());
         Log.d(TAG, "onMFragControlInitialised");
 
         //add all our bookmarks to the view
